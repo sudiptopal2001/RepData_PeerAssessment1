@@ -23,39 +23,39 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 Loading and preprocessing the data
 Unzip data to obtain a csv file.
 
-library("data.table")
-library(ggplot2)
+  library("data.table")
+  library(ggplot2)
 
-fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip" 
+  fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip" 
 
-download.file(fileUrl, destfile = paste0(getwd(), '/repdata%2Fdata%2Factivity.zip'), method = "curl")
+  download.file(fileUrl, destfile = paste0(getwd(), '/repdata%2Fdata%2Factivity.zip'), method = "curl")
 
-unzip("repdata%2Fdata%2Factivity.zip",exdir = "data")
+  unzip("repdata%2Fdata%2Factivity.zip",exdir = "data")
 
-Reading csv Data into Data.Table.
+  Reading csv Data into Data.Table.
 
-activityDT <- data.table::fread(input = "data/activity.csv")
+  activityDT <- data.table::fread(input = "data/activity.csv")
 
-What is mean total number of steps taken per day?
+  What is mean total number of steps taken per day?
 
 1.  Calculate the total number of steps taken per day
 
-Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
+  Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
 
 
-head(Total_Steps, 10)
+  head(Total_Steps, 10)
 
-##           date steps
-##  1: 2012-10-01    NA
-##  2: 2012-10-02   126
-##  3: 2012-10-03 11352
-##  4: 2012-10-04 12116
-##  5: 2012-10-05 13294
-##  6: 2012-10-06 15420
-##  7: 2012-10-07 11015
-##  8: 2012-10-08    NA
-##  9: 2012-10-09 12811
-## 10: 2012-10-10  9900
+  ##           date steps
+  ##  1: 2012-10-01    NA
+  ##  2: 2012-10-02   126
+  ##  3: 2012-10-03 11352
+  ##  4: 2012-10-04 12116
+  ##  5: 2012-10-05 13294
+  ##  6: 2012-10-06 15420
+  ##  7: 2012-10-07 11015
+  ##  8: 2012-10-08    NA
+  ##  9: 2012-10-09 12811
+  ## 10: 2012-10-10  9900
 1.  If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day.
 
  ggplot(Total_Steps, aes(x = steps)) +
