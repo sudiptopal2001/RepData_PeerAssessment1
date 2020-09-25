@@ -5,6 +5,7 @@ Sudipto Pal
 github repo for rest of specialization: Data Science Coursera
 
 Introduction
+
 It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. These type of devices are part of the “quantified self” movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. But these data remain under-utilized both because the raw data are hard to obtain and there is a lack of statistical methods and software for processing and interpreting the data.
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
@@ -26,54 +27,83 @@ library("data.table")
 library(ggplot2)
 
 fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+
 download.file(fileUrl, destfile = paste0(getwd(), '/repdata%2Fdata%2Factivity.zip'), method = "curl")
+
 unzip("repdata%2Fdata%2Factivity.zip",exdir = "data")
+
 Reading csv Data into Data.Table.
+
 activityDT <- data.table::fread(input = "data/activity.csv")
+
 What is mean total number of steps taken per day?
+
 Calculate the total number of steps taken per day
+
 Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
 
+
 head(Total_Steps, 10)
-##           date steps
-##  1: 2012-10-01    NA
-##  2: 2012-10-02   126
-##  3: 2012-10-03 11352
-##  4: 2012-10-04 12116
-##  5: 2012-10-05 13294
-##  6: 2012-10-06 15420
-##  7: 2012-10-07 11015
-##  8: 2012-10-08    NA
-##  9: 2012-10-09 12811
-## 10: 2012-10-10  9900
+##            date steps
+##   1: 2012-10-01    NA
+##   2: 2012-10-02   126
+##   3: 2012-10-03 11352
+##   4: 2012-10-04 12116
+##   5: 2012-10-05 13294
+##   6: 2012-10-06 15420
+##   7: 2012-10-07 11015
+##   8: 2012-10-08    NA
+##   9: 2012-10-09 12811
+##  10: 2012-10-10  9900
 If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day.
 ggplot(Total_Steps, aes(x = steps)) +
+
     geom_histogram(fill = "blue", binwidth = 1000) +
+    
     labs(title = "Daily Steps", x = "Steps", y = "Frequency")
+    
 ## Warning: Removed 8 rows containing non-finite values (stat_bin).
 
 
-Calculate and report the mean and median of the total number of steps taken per day
+Calculate and report the mean and median of the total number of steps taken per day 
+
 Total_Steps[, .(Mean_Steps = mean(steps, na.rm = TRUE), Median_Steps = median(steps, na.rm = TRUE))]
-##    Mean_Steps Median_Steps
-## 1:   10766.19        10765
+
+##     Mean_Steps Median_Steps
+
+## 1:    10766.19        10765
+
 What is the average daily activity pattern?
+
 Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+
 IntervalDT <- activityDT[, c(lapply(.SD, mean, na.rm = TRUE)), .SDcols = c("steps"), by = .(interval)] 
+
 
 ggplot(IntervalDT, aes(x = interval , y = steps)) + geom_line(color="blue", size=1) + labs(title = "Avg. Daily Steps", x = "Interval", y = "Avg. Steps per day")
 
 
+
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
 IntervalDT[steps == max(steps), .(max_interval = interval)]
-##    max_interval
-## 1:          835
+
+##     max_interval
+
+## 1:           835
+
 Imputing missing values
+
 Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
+
 activityDT[is.na(steps), .N ]
+
 ## [1] 2304
+
 # alternative solution
+
 nrow(activityDT[is.na(steps),])
+
 ## [1] 2304
 Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 # Filling in missing values with median of dataset. 
