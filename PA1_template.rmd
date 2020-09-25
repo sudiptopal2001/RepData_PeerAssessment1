@@ -1,7 +1,7 @@
 ---
 title: "Reproducible Research Project 1"
-author: "Michael Galarnyk"
-date: "3/26/2017"
+author: "Sudipto Pal"
+date: "25/09/2020"
 output:
   md_document:
     variant: markdown_github
