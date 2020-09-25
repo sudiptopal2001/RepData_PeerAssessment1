@@ -54,7 +54,7 @@ Reading csv Data into Data.Table.
               
 ## Warning: Removed 8 rows containing non-finite values (stat_bin).
             
-          https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-1.png
+  https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-1.png
           
 1. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -69,7 +69,8 @@ What is the average daily activity pattern?
 
         ggplot(IntervalDT, aes(x = interval , y = steps)) + geom_line(color="blue", size=1) + labs(title = "Avg. Daily Steps", x = "Interval", y = "Avg. Steps per day"          
 
-        https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-2.png?raw=true 
+    https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-2.png?raw=true
+    
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 1. IntervalDT[steps == max(steps), .(max_interval = interval)]
 
@@ -104,7 +105,7 @@ Which 5-minute interval, on average across all the days in the dataset, contains
        ggplot(Total_Steps, aes(x = steps)) + geom_histogram(fill = "blue", binwidth = 1000) + labs(title = "Daily Steps", x = "Steps", y = "Frequ  
        
        
-       https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-3.png?raw=true
+   https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-3.png?raw=true
        
        
        Type of Estimate	Mean_Steps	             Median_Steps
@@ -143,4 +144,4 @@ Are there differences in activity patterns between weekdays and weekends?
 
           ggplot(IntervalDT , aes(x = interval , y = steps, color=`weekday or weekend`)) + geom_line() + labs(title = "Avg. Daily Steps by Weektype", x = "Interval", y = "No. of Steps") + facet_wrap(~`weekday or weekend` , ncol = 1, nrow=2)
              
-             https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-4.png?raw=true
+  https://github.com/sudiptopal2001/RepData_PeerAssessment1/blob/master/CS-4.png?raw=true
