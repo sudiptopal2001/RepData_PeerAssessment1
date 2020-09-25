@@ -25,24 +25,16 @@ Unzip data to obtain a csv file.
 
   library("data.table")
   library(ggplot2)
-
   fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip" 
-
   download.file(fileUrl, destfile = paste0(getwd(), '/repdata%2Fdata%2Factivity.zip'), method = "curl")
-
   unzip("repdata%2Fdata%2Factivity.zip",exdir = "data")
-
   Reading csv Data into Data.Table.
-
   activityDT <- data.table::fread(input = "data/activity.csv")
-
   What is mean total number of steps taken per day?
 
 1.  Calculate the total number of steps taken per day
 
   Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
-
-
   head(Total_Steps, 10)
 
   ##           date steps
